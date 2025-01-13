@@ -1,24 +1,59 @@
-# Compiled class file
-*.class
+# Ignore Maven target directory (build artifacts)
+target/
 
-# Log file
+# Ignore IDE specific files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Ignore Eclipse project files
+*.classpath
+*.project
+*.settings/
+
+# Ignore IntelliJ IDEA project files
+*.idea/
+*.iws
+*.iml
+out/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
 *.log
 
-# BlueJ files
-*.ctxt
+# Ignore Maven wrapper files
+.mvn/
+mvnw
+mvnw.cmd
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# Ignore local environment files
+.env
+.env.local
+*.log
+*.hprof
 *.jar
 *.war
-*.nar
 *.ear
-*.zip
 *.tar.gz
 *.rar
+*.zip
+*.tar.bz2
+*.tar.xz
+*.tar.Z
+*.tar.lz
+*.tar.lz4
+*.class
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# Ignore Docker build cache and image files
+docker-compose.override.yml
+.docker/
+.dockerignore
+
+# Ignore application properties with sensitive data (ensure sensitive data is excluded)
+application.properties
+#application.yml
+application-dev.properties

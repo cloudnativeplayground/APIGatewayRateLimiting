@@ -1,0 +1,46 @@
+server:
+  port: 8080  # Port for your API Gateway
+
+spring:
+  application:
+    name: api-gateway  # Name of the application
+
+  cloud:
+    gateway:
+      # Default global filters and route configuration
+      default-filters:
+        - name: AddRequestHeader
+          args:
+            X-Request-Foo: Bar
+
+      routes:
+        - id: hello-api
+          uri: http://localhost:8081  # Replace with actual backend service URI
+          predicates:
+            - Path=/api/hello
+          filters:
+            - AddRequestHeader=X-Request-Foo, Bar
+
+        - id: rate-limited-api
+          uri: http://localhost:8082  # Replace with actual rate-limited service URI
+          predicates:
+            - Path=/api/rate-limited
+          filters:
+            - AddRequestHeader=X-RateLimit, True
+            - Name=rate-limiting-filter  # Reference to the custom rate-limiting filter
+
+  redis:
+    host: localhost
+    port: 6379  # Default Redis port
+    timeout: 2000ms
+
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/  # Eureka server URL (if using Eureka)
+
+logging:
+  level:
+    org.springframework.web: DEBUG  # Log level for Spring Web requests
+    org.springframework.cloud.gateway: INFO  # Log level for Spring Cloud Gateway
+

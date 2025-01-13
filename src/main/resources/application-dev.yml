@@ -1,0 +1,39 @@
+server:
+  port: 8081  # Port for the API Gateway in the dev environment
+
+spring:
+  profiles:
+    active: dev  # Sets the active profile to 'dev', useful for different environments
+
+  application:
+    name: api-gateway-dev  # Name of the application in the dev environment
+
+  cloud:
+    gateway:
+      # Dev-specific routes for testing purposes
+      routes:
+        - id: hello-api-dev
+          uri: http://localhost:8082  # Dev backend service URL
+          predicates:
+            - Path=/api/hello-dev
+          filters:
+            - AddRequestHeader=X-Dev-Request, DevHeader
+
+        - id: rate-limited-api-dev
+          uri: http://localhost:8083  # Dev rate-limited service URL
+          predicates:
+            - Path=/api/rate-limited-dev
+          filters:
+            - AddRequestHeader=X-RateLimit, True
+            - Name=rate-limiting-filter  # Reference to the custom rate-limiting filter
+
+  redis:
+    host: localhost
+    port: 6379  # Local Redis server for dev environment
+    timeout: 2000ms
+
+logging:
+  level:
+    org.springframework.web: DEBUG  # Set logging level to DEBUG for web requests
+    org.springframework.cloud.gateway: DEBUG  # Set logging level to DEBUG for gateway logs
+
